@@ -29,6 +29,8 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     private static final int CAMERA_REQUEST_CODE = 102;
     private static final int CAMERA_PERM_CODE = 101;
     String choice;
+    Bitmap bitmap;
+    ImageView imageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,8 +39,6 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Spinner spinner;
         EditText edtName, edtNumber;
         Switch switch1;
-        ImageView imageView;
-        Bitmap bitmap;
         Button btnSend;
         edtName = findViewById(R.id.edtName);
         edtNumber = findViewById(R.id.edtNumber);
@@ -76,23 +76,25 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         btnSend.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-/*
+
                 if(bitmap != null) {
                         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
                         bitmap.compress(Bitmap.CompressFormat.PNG, 50, bytes);
-                        byte[] byteArray = bytes.toByteArray();   */
+                        byte[] byteArray = bytes.toByteArray();
                         Intent intent = new Intent(MainActivity.this, MainActivity2.class);
                         intent.putExtra("Name", edtName.getText().toString());
                         intent.putExtra("Number", edtNumber.getText().toString());
                         intent.putExtra("Gender", choice);
                         intent.putExtra("age", switch1.getText().toString());
+                        intent.putExtra("picture", byteArray);
                         startActivity(intent);
                     }
-          });
+          };
 
 
-    }
+    });
 
+}
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         choice = parent.getItemAtPosition(position).toString();
@@ -117,8 +119,7 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if(requestCode == CAMERA_REQUEST_CODE){
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            ImageView imageView = findViewById(R.id.imageView);
+            bitmap = (Bitmap) data.getExtras().get("data");
             imageView.setImageBitmap(bitmap);
         }
     }
@@ -127,5 +128,4 @@ public class MainActivity extends AppCompatActivity implements AdapterView.OnIte
         Intent camera = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(camera, CAMERA_REQUEST_CODE);
     }
-
 }

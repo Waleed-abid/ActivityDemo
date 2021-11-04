@@ -34,7 +34,7 @@ public class MainActivity2 extends AppCompatActivity {
 
         String name = getIntent().getStringExtra("Name");
         recieveName.setText("Name: " +name);
-        String Number = getIntent().getStringExtra("Age");
+        String Number = getIntent().getStringExtra("Number");
         recieveNumber.setText("Number: " +Number);
         String gender = getIntent().getStringExtra("Gender");
         genderTv.setText("Gender: " + gender);
